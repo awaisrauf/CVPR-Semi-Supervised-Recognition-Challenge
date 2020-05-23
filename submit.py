@@ -15,15 +15,19 @@ args = args_for_train_tl()
 #         args = parser.parse_args(namespace=t_args)
 state = {k: v for k, v in args._get_kwargs()}
 
-batch_size = 128
-test_loader = get_test_data()
+
 ############################################
 # Create and Load Model
 ############################################
-from models.model1 import get_model
-model = get_model(num_classes=200, train=False)
+from models.models import get_model
+model, image_size = get_model(args, num_classes=200, train=False, use_pretrained=False)
 model = model.cuda()
 model = torch.nn.DataParallel(model)
+
+
+####
+test_loader = get_test_data(batch_size=args.train_batch, image_size=image_size)
+
 
 # Resume
 if args.resume:

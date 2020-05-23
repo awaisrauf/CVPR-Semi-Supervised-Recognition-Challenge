@@ -21,8 +21,8 @@ def get_model(args, num_classes, train=False, use_pretrained=True):
 		# ResNet
 		if args.depth == 18:
 			model_ft = models.resnet18(pretrained=use_pretrained)
-		elif args.depth == 32:
-			model_ft = models.resnet32(pretrained=use_pretrained)
+		elif args.depth == 34:
+			model_ft = models.resnet34(pretrained=use_pretrained)
 		elif args.depth == 50:
 			model_ft = models.resnet50(pretrained=use_pretrained)
 		elif args.depth == 101:
@@ -62,19 +62,26 @@ def get_model(args, num_classes, train=False, use_pretrained=True):
 
 	elif args.model == "inceptionv4":
 		from pretrainedmodels import inceptionv4
-		model_ft = inceptionv4(num_classes=num_classes, pretrained='imagenet')
+		model_ft = inceptionv4(num_classes=1000, pretrained='imagenet')
+		num_ftrs = model_ft.last_linear.in_features[1]
+		model_ft.last_linear = nn.Linear(num_ftrs, num_classes)
+
 		input_size = model_ft.input_size
 
 	elif args.model == "inceptionresnetv2":
 		from pretrainedmodels import inceptionresnetv2
-		model_ft = inceptionresnetv2(num_classes=num_classes, pretrained='imagenet')
-		input_size = model_ft.input_size
+		model_ft = inceptionresnetv2(num_classes=1000, pretrained='imagenet')
+		num_ftrs = model_ft.last_linear.in_features
+		model_ft.last_linear = nn.Linear(num_ftrs, num_classes)
+
+		input_size = model_ft.input_size[1]
 
 	else:
 		print("Invalid model name, exiting...")
 		exit()
 
 	# retrained batchnorm
+
 	if args.norm == "rbn" and train:
 		for n, m in model_ft.named_modules():
 			if "bn" in n:

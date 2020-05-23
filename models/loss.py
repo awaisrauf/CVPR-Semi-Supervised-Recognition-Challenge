@@ -1,9 +1,8 @@
-import math
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import numpy as np
-
+from .cross_entropy import CrossEntropyLoss
 
 class LDAMLoss(nn.Module):
 
@@ -29,13 +28,64 @@ class LDAMLoss(nn.Module):
 		output = torch.where(index, x_m, x)
 		return F.cross_entropy(self.s * output, target, weight=self.weight)
 
+
+class SoftCrossEntropy(nn.Module):
+	def __init__(self):
+		super(SoftCrossEntropy, self).__init__()
+
+	def forward(self, predicted, target, model):
+		return -(target * torch.log(predicted)).sum(dim=1).mean()
+
+
 # Cross Entorpy with Regulrizattion
 class WL2SP(nn.Module):
 
-	def __init__(self, model, pretrained_model_weights, class_weights):
+	def __init__(self, pretrained_weights, class_weights):
 		super(WL2SP, self).__init__()
-		self.model = model
-	def forward(self, x, target):
-		for param in self.model.parameters():
-			l2_reg += torch.norm(param)
-		return F.cross_entropy(x, target, weight=self.class_weights)
+		self.pretrained_weights = pretrained_weights
+		self.class_weights = class_weights
+
+	def forward(self, x, target, model):
+		l2_reg_shared_weight = torch.zeros(1).cuda()
+		l2_reg = torch.zeros(1)
+		for n, m in model.named_modules():
+			if "conv" in n:
+				try:
+					l2_reg_shared_weight += torch.norm(m.weight - self.pretrained_weights[n]) ** 2
+				except:
+					pass
+		# 	print(m)
+		# if "fc" in n:
+		# 	l2_reg += 0#torch.norm(m.weight)**2
+
+		alpha = 0.1
+		beta = 0.01
+		loss = F.cross_entropy(x, target,
+		                       weight=self.class_weights) + 0.5 * alpha * l2_reg_shared_weight  # + 0.5*beta*l2_reg
+		return loss
+
+
+# Cross Entorpy with Regulrizattion
+class UMSE(nn.Module):
+
+	def __init__(self):
+		super(UMSE, self).__init__()
+
+	def forward(self, output, model):
+		l2_reg_shared_weight = torch.zeros(1).cuda()
+		l2_reg = torch.zeros(1)
+		for n, m in model.named_modules():
+			if "conv" in n:
+				try:
+					l2_reg_shared_weight += torch.norm(m.weight - self.pretrained_weights[n]) ** 2
+				except:
+					pass
+		# 	print(m)
+		# if "fc" in n:
+		# 	l2_reg += 0#torch.norm(m.weight)**2
+
+		mse_loss = (output ** 2).mean()
+		alpha = 0.1
+		beta = 0.01
+		loss = mse_loss + 0.5 * alpha * l2_reg_shared_weight  # + 0.5*beta*l2_reg
+		return loss

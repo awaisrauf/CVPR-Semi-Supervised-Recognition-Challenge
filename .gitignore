@@ -3,6 +3,7 @@ results/
 experiments/
 .ipynb_checkpoints
 .idea
+checkpoints/
 ## Boiler plate
 
 # Byte-compiled / optimized / DLL files

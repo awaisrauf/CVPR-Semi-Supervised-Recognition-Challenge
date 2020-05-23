@@ -54,6 +54,9 @@ shown in the Figure below.
 
 ![Train Val Distribution](imgs/class_dist1.png)
 
+### Exploring Data
+
+#### Class Distribution
 ![](imgs/class_dist.png)
 
 #### train and validation
@@ -83,11 +86,11 @@ Primarily, I will tackle the problem as transfer learning and use best practices
     - [ ] DataLoader
         -[ ] Custom DataLoader for 
         -[ ] 
-    - [ ] Data Augmentation: Create a file to augment data
+    - [x] Data Augmentation: Create a file to augment data
         - [ ] Balanced sampler
-        - [ ] How to use augmentation for better results
+        - [ ] How to use augmentation for better results (augmentation is not working as well as i was expecting.)
 -[ ] Models
-    -[ ] Create getModels
+    -[x] Create getModels
 -[ ] Hyperparameter Tuning
     
 - [ ] Cycle Learning Rate
