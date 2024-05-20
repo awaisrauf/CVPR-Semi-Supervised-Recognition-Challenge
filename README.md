@@ -1,5 +1,5 @@
 # Semi-Supervised Recognition Challenge - FGVC7
-This project contains my code for [CVPR2020]() challenge on Semi-Supervised Recognition.
+This project contains my code for the [CVPR2020](https://cvpr2020.thecvf.com/) challenge on Semi-Supervised Recognition.
 
 - [Kaggle Challenge Link](https://www.kaggle.com/c/semi-inat-2020)
 - [Github Link](https://github.com/cvl-umass/semi-inat-2020)
@@ -7,23 +7,33 @@ This project contains my code for [CVPR2020]() challenge on Semi-Supervised Reco
 ![](imgs/banner.png)
 
 ## Description 
-This challenge is focused on learning from partially labeled data, a form of semi-supervised learning. This dataset is designed to expose some of the challenges encountered in a realistic setting, such as the fine-grained similarity between classes, significant class imbalance, and domain mismatch between the labeled and unlabeled data.
+
+A CVPR202 ML challenge focused on learning from partially labeled data, a form of semi-supervised learning. The dataset is designed to expose some challenges encountered in a realistic setting, such as the fine-grained similarity between classes, significant class imbalance, and domain mismatch between the labeled and unlabeled data.
+
+## Overview of Approach
+
+Primarily, I will tackle the problem as transfer learning and use best practices from 5 different domains to increase accuracy further. 
 
 ###  Major Components of the Project
-1. Transfer Learning (ImageNet --> ..)
-2. Fine Grained Classification
+
+1. Transfer Learning (ImageNet --> iNat2020)
+2. Fine-Grained Classification
 3. Long Tail Classification 
-4. Semi Supervised Learning (A huge unlabelled dataset)
+4. Semi-supervised learning (A huge unlabelled dataset)
 5. Learning From out of distribution data
 
+## Competition Results
+
+<img width="1095" alt="results" src="https://github.com/awaisrauf/CVPR-Semi-Supervised-Recognition-Challenge/assets/30290500/96de2cc4-5e3e-4ed9-9494-8773a3ba1a42">
+
+
 ### Data
-This challenge focusses on Aves (birds) classification where we
+This challenge focuses on Aves (birds) classification, where we
 provide labeled data of the target classes and unlabeled data from
 target and non-target classes.
-The data is obtained from iNaturalist, a community
-driven project aimed at collecting observations of biodiversity.
+The data is obtained from iNaturalist, a community-driven project aimed at collecting biodiversity observations.
 
-The dataset comes with standard training, validation and test sets.
+The dataset comes with standard training, validation, and test sets.
 The training set consists of:
 
 * **labeled images** from 200 species of
@@ -59,47 +69,18 @@ shown in the Figure below.
 #### Class Distribution
 ![](imgs/class_dist.png)
 
-#### train and validation
+#### Train and validation
 ![](imgs/train_val_sample.png)
 
-#### test
-
+#### Test
 ![](imgs/test_sample.png)
 
-#### in-distribution data
-
+#### In-distribution data
 ![](imgs/in_dist_sample.png)
-#### out-distribution data
+
+#### Out-distribution data
 ![](imgs/out_dsit_sample.png)
 
-
-
-## Overview of Approach 
-Primarily, I will tackle the problem as transfer learning and use best practices from 5 different domains to further increase accuracy. 
-
-
-### ToDos
-- [ ] Transfer Learning 
-
-### Coding ToDos
--[ ] Data
-    - [ ] DataLoader
-        -[ ] Custom DataLoader for 
-        -[ ] 
-    - [x] Data Augmentation: Create a file to augment data
-        - [ ] Balanced sampler
-        - [ ] How to use augmentation for better results (augmentation is not working as well as i was expecting.)
--[ ] Models
-    -[x] Create getModels
--[ ] Hyperparameter Tuning
-    
-- [ ] Cycle Learning Rate
-- [ ] Class Imbalance
-- [ ] Noisy Teacher: with diff batch norm at the end on clean data?
-
-### File Description 
-- final_train.py: 
-- train: ..
 
 
 ## References 
