@@ -12,7 +12,7 @@ A CVPR202 ML challenge focused on learning from partially labeled data, a form o
 
 ## Overview of Approach
 
-Primarily, I will tackle the problem as transfer learning and use best practices from 5 different domains to increase accuracy further. 
+Primarily, I tackled the problem as transfer learning one and used best practices from 5 different domains to increase performance. 
 
 ###  Major Components of the Project
 
